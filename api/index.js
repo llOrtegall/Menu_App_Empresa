@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 
 dotenv.config()
 const mongoUrl = process.env.MONGO_URL;
+const jwtSecret = process.env.JWT_SECRET
 mongoose.connect(mongoUrl)
 
 const app = express()
@@ -18,7 +19,10 @@ app.get('/test', (req, res) => {
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
   const createdUser = await UserModel.create({ username, password })
-  jwt.sign({ userId: createdUser._id },)
+  jwt.sign({ userId: createdUser._id }, jwtSecret, {}, (token) => {
+    if (err) throw err
+    res.cookie('token', token).status(201).json('Ok Token')
+  })
 })
 
 app.listen(PORT, () => {
