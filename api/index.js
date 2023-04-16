@@ -3,14 +3,22 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { UserModel } from "./models/User.js"
 import jwt from "jsonwebtoken";
+import cors from "cors";
 
-dotenv.config()
-const mongoUrl = process.env.MONGO_URL;
-const jwtSecret = process.env.JWT_SECRET
-mongoose.connect(mongoUrl)
 
-const app = express()
-const PORT = 4000
+const PORT = 4000;
+dotenv.config();
+
+const MONGO_URL = process.env.MONGO_URL;
+const jwtSecret = process.env.JWT_SECRET;
+
+mongoose.connect(MONGO_URL);
+
+const app = express();
+app.use(cors({
+  credentials: true,
+  origin: process.env.CLIENT_URL
+}));
 
 app.get('/test', (req, res) => {
   res.json('test ok')
