@@ -38,7 +38,7 @@ app.get('/profile', (req, res) => {
   }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/Ingresar', async (req, res) => {
   const { username, password } = req.body;
   const foundUser = await UserModel.findOne({ username });
   if (foundUser) {
@@ -46,34 +46,42 @@ app.post('/login', async (req, res) => {
     if (passOk) {
       jwt.sign({ userId: foundUser._id, username }, JWT_SECRECT, {}, (err, token) => {
         res.cookie('token', token, { sameSite: 'none', secure: true }).json({
-          id: foundUser._id
+          id: foundUser._id, username
         })
       })
     }
   }
 });
 
-app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+app.post('/Registrarse', async (req, res) => {
+  console.log(req.body)
+  const { nombres, apellidos, documento } = req.body;
+
+  const ultimos3 = documento.slice(-3)
+  const password = `CP${ultimos3}`
+  const username = `CP${documento}`
+
   try {
     const hashedPassword = bcrypt.hashSync(password, BYCRYPSALT);
     const createdUser = await UserModel.create({
-      username: username,
-      password: hashedPassword
+      username: username, password: hashedPassword,
+      nombres: nombres, apellidos: apellidos,
+      documento: documento
     });
-    jwt.sign({ userId: createdUser._id, username }, JWT_SECRECT, {}, (err, token) => {
+    jwt.sign({ userId: createdUser._id, username, nombres, apellidos }, JWT_SECRECT, {}, (err, token) => {
       if (err) { throw err }
       else {
         res.cookie('token', token, { sameSite: 'none', secure: true }).status(201).json({
-          id: createdUser._id,
-          username
+          id: createdUser._id, username, nombres, apellidos
         })
       }
     })
+    console.log(createdUser)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
   }
+
 });
 
 app.listen(PORT, () => {

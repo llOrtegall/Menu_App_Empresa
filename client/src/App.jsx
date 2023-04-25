@@ -1,6 +1,4 @@
 import { UserContextProvider } from "./UserContext";
-// import { Consulta } from "./components/Consulta";
-// import { Register } from "./components/Register";
 import axios from "axios";
 import { Routes } from "./Routes";
 

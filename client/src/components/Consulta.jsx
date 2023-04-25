@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { ConsultaDetallada } from './ConsultaDetallada.jsx';
 import { ButtonLoading, IconUser, CloseSession } from './ButtonLoading.jsx';
+import { UserContext } from '../UserContext.jsx';
 
 export function Consulta() {
+  const { username, id } = useContext(UserContext)
   const [data, setData] = useState(null);
   const [cargando, setCargando] = useState(false);
   const [mostrarComponente, setMostrarComponente] = useState(false);
@@ -18,7 +20,9 @@ export function Consulta() {
   };
 
   const ValidarDocumentoConsulta = ({ prop }) => {
+
     let newArray = [];
+
     if (prop.length > 0) {
       newArray = prop.filter(i => i.documentoIdentidad === data.numDocumento)
       return (
@@ -80,8 +84,9 @@ export function Consulta() {
         <div className='flex items-center'>
           <IconUser />
           <article className='pl-4'>
-            <h2 className='text-2xl font-semibold'>Bienvenido Usuario De Prueba</h2>
+            <h2 className='text-2xl font-semibold'>Bienvenido: <span>{username}</span></h2>
             <h3 className='text-xl'>CP11185647472</h3>
+            <h5>{id}</h5>
           </article>
         </div>
         <CloseSession />
