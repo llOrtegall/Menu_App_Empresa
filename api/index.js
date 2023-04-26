@@ -76,9 +76,8 @@ app.post('/Registrarse', async (req, res) => {
         })
       }
     })
-    console.log(createdUser)
+    console.log('Usuario Creado: ' + createdUser)
   } catch (error) {
-    console.log(error)
     res.status(500).json(error)
   }
 
