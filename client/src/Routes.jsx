@@ -1,12 +1,13 @@
 import { useContext } from "react";
 import { RegisterAndLoginForm } from "./components/RegisterAndLoginForm";
 import { UserContext } from "./UserContext";
-import { Consulta } from "./components/Consulta";
+import { Consulta } from "./components/Consulta.jsx";
+
 
 export function Routes() {
-  const { username, id } = useContext(UserContext);
+  const { usuario, id, names, lastNames } = useContext(UserContext);
 
-  if (username) {
+  if (usuario) {
     return (
       <Consulta />
     )

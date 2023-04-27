@@ -1,10 +1,9 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { ConsultaDetallada } from './ConsultaDetallada.jsx';
 import { ButtonLoading, IconUser, CloseSession } from './ButtonLoading.jsx';
-import { UserContext } from '../UserContext.jsx';
 
-export function Consulta() {
-  const { username, id } = useContext(UserContext)
+export function Consulta({ usuario, id, names, lastNames }) {
+
   const [data, setData] = useState(null);
   const [cargando, setCargando] = useState(false);
   const [mostrarComponente, setMostrarComponente] = useState(false);
@@ -84,9 +83,9 @@ export function Consulta() {
         <div className='flex items-center'>
           <IconUser />
           <article className='pl-4'>
-            <h2 className='text-2xl font-semibold'>Bienvenido: <span>{username}</span></h2>
+            <h2 className='text-2xl font-semibold'>Bienvenido: <span>usuario aqui</span></h2>
             <h3 className='text-xl'>CP11185647472</h3>
-            <h5>{id}</h5>
+            <h5>idaqui</h5>
           </article>
         </div>
         <CloseSession />

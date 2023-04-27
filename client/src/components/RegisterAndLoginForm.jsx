@@ -4,12 +4,12 @@ import { UserContext } from "../UserContext";
 
 export function RegisterAndLoginForm() {
 
-  const { setUsername: setLoggedInUsername, setId } = useContext(UserContext);
+  // TODO: User Context Recibe el contexto del usuario creado
+  const { setId, setUsuario, setNames, setLastNames } = useContext(UserContext);
 
   const [nombres, setNombres] = useState('');
   const [apellidos, setApellidos] = useState('');
   const [documento, setDocumento] = useState('');
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,19 +19,16 @@ export function RegisterAndLoginForm() {
   async function handleSubmitRegister(ev) {
     ev.preventDefault();
     const { data } = await axios.post('/Registrarse', { nombres, apellidos, documento });
-    setLoggedInUsername(username);
-    setId(data.id);
+    setId(data.id); setUsuario(data.username); setNames(data.nombres); setLastNames(data.apellidos);
   }
+
   async function handleSubmitLogin(ev) {
     ev.preventDefault();
     const { data } = await axios.post('/Ingresar', { username, password });
-    setLoggedInUsername(username);
-    setId(data.id);
+    setId(data.id); setUsuario(data.username); setNames(data.nombres); setLastNames(data.apellidos)
   }
 
   return (
-
-
     <section className="bg-blue-200 w-screen h-screen grid place-content-center">
       {isLoginOrRegister === 'Registrarse' && (
         <form className="w-96 text-center" onSubmit={handleSubmitRegister}>
@@ -51,7 +48,6 @@ export function RegisterAndLoginForm() {
           <button className="bg-blue-500 text-white block w-full rounded-md p-2">
             {isLoginOrRegister === 'Registrarse' ? 'Registrarse' : 'Ingresar'}
           </button>
-
           <div className="mt-2">
             Ya Estás Registrado ?
             <button
@@ -85,8 +81,7 @@ export function RegisterAndLoginForm() {
             </button>
           </div>
         </form>
-      )
-      }
+      )}
     </section >
   )
 }

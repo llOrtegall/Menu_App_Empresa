@@ -44,29 +44,32 @@ app.post('/Ingresar', async (req, res) => {
   if (foundUser) {
     const passOk = bcrypt.compareSync(password, foundUser.password)
     if (passOk) {
-      jwt.sign({ userId: foundUser._id, username }, JWT_SECRECT, {}, (err, token) => {
-        res.cookie('token', token, { sameSite: 'none', secure: true }).json({
-          id: foundUser._id, username
-        })
+      jwt.sign({ userId: foundUser._id, username, nombres: foundUser.nombres, apellidos: foundUser.apellidos }, JWT_SECRECT, {}, (err, token) => {
+        if (err) { throw err }
+        else {
+          res.cookie('token', token, { sameSite: 'none', secure: true })
+            .json({ id: foundUser._id, username, nombres: foundUser.nombres, apellidos: foundUser.apellidos })
+        }
       })
+    } else {
+      res.status(401).json('Contraseña Invalida')
     }
+  } else {
+    res.status(400).json('Usuario No Encontrado')
   }
 });
 
 app.post('/Registrarse', async (req, res) => {
-  console.log(req.body)
-  const { nombres, apellidos, documento } = req.body;
 
-  const ultimos3 = documento.slice(-3)
-  const password = `CP${ultimos3}`
+  const { nombres, apellidos, documento } = req.body;
+  const password = `CP${documento.slice(-3)}`
   const username = `CP${documento}`
 
   try {
     const hashedPassword = bcrypt.hashSync(password, BYCRYPSALT);
     const createdUser = await UserModel.create({
       username: username, password: hashedPassword,
-      nombres: nombres, apellidos: apellidos,
-      documento: documento
+      nombres: nombres, apellidos: apellidos, documento: documento
     });
     jwt.sign({ userId: createdUser._id, username, nombres, apellidos }, JWT_SECRECT, {}, (err, token) => {
       if (err) { throw err }
@@ -76,8 +79,8 @@ app.post('/Registrarse', async (req, res) => {
         })
       }
     })
-    console.log('Usuario Creado: ' + createdUser)
   } catch (error) {
+    console.log(error);
     res.status(500).json(error)
   }
 
