@@ -1,5 +1,11 @@
-import '@/styles/globals.css'
+import React, { Component } from 'react';
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+export class _app extends Component {
+  render() {
+    return (
+      <div>main</div>
+    )
+  }
 }
+
+export default _app
