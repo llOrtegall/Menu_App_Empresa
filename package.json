@@ -1,22 +1,14 @@
 {
-  "name": "mynextapp",
-  "version": "0.1.0",
+  "name": "myappstore",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "dependencies": {
-    "eslint": "8.38.0",
-    "eslint-config-next": "^13.3.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-prettier": "^4.2.1",
-    "next": "13.3.0",
-    "prettier": "^2.8.7",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+  "devDependencies": {
+    "vite": "^4.3.2"
   }
 }
