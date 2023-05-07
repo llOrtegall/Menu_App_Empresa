@@ -1,19 +1,19 @@
 function Header() {
   return (
-    <header>
+    <header className="flex justify-center">
       <nav>
-        <ul>
-          <li>
-            <a href="#">Home</a>
+        <ul className="flex">
+          <li className="m-3">
+            <a className="p-2 text-center text-cyan-300 font-medium" href="#">Home</a>
           </li>
-          <li>
-            <a href="#">Products</a>
+          <li className="m-3">
+            <a className="p-2 text-center text-cyan-300 font-medium" href="#">Products</a>
           </li>
-          <li>
-            <a href="#">About Us</a>
+          <li className="m-3">
+            <a className="p-2 text-center text-cyan-300 font-medium" href="#">About Us</a>
           </li>
-          <li>
-            <a href="#">Cont Us</a>
+          <li className="m-3">
+            <a className="p-2 text-center text-cyan-300 font-medium" href="#">Cont Us</a>
           </li>
         </ul>
       </nav>
