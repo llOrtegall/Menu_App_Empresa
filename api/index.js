@@ -40,8 +40,11 @@ app.get('/profile', (req, res) => {
 
 app.post('/Ingresar', async (req, res) => {
   const { username, password } = req.body;
+
+  //TODO: Busca En la Base de Datos el usuario por username Ya que es unique: True
   const foundUser = await UserModel.findOne({ username });
   if (foundUser) {
+    //TODO: Si el usuario es encontrado verifica la contraseña encryptada
     const passOk = bcrypt.compareSync(password, foundUser.password)
     if (passOk) {
       jwt.sign({ userId: foundUser._id, username, nombres: foundUser.nombres, apellidos: foundUser.apellidos }, JWT_SECRECT, {}, (err, token) => {
@@ -66,11 +69,16 @@ app.post('/Registrarse', async (req, res) => {
   const username = `CP${documento}`
 
   try {
+    // TODO: Encrypta La Contraseña
     const hashedPassword = bcrypt.hashSync(password, BYCRYPSALT);
+
+    // TODO: Crea El Usuario en MongoDB
     const createdUser = await UserModel.create({
       username: username, password: hashedPassword,
       nombres: nombres, apellidos: apellidos, documento: documento
     });
+
+    //TODO: Una Vez Crea El Usuario Le Asigna Un TOKEN
     jwt.sign({ userId: createdUser._id, username, nombres, apellidos }, JWT_SECRECT, {}, (err, token) => {
       if (err) { throw err }
       else {
@@ -80,8 +88,7 @@ app.post('/Registrarse', async (req, res) => {
       }
     })
   } catch (error) {
-    console.log(error);
-    res.status(500).json(error)
+    res.status(500).json('Usuario Ya Existe')
   }
 
 });

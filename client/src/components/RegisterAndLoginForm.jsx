@@ -29,6 +29,7 @@ export function RegisterAndLoginForm() {
   }
 
   return (
+    // TODO: Formulario De Registro
     <section className="bg-blue-200 w-screen h-screen grid place-content-center">
       {isLoginOrRegister === 'Registrarse' && (
         <form className="w-96 text-center" onSubmit={handleSubmitRegister}>
