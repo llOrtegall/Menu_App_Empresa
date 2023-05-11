@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { ConsultaDetallada } from './ConsultaDetallada.jsx';
 import { ButtonLoading, IconUser, CloseSession } from './ButtonLoading.jsx';
 
-export function Consulta({ usuario, id, names, lastNames }) {
+export function Consulta({ info }) {
+
+  console.log(info);
 
   const [data, setData] = useState(null);
   const [cargando, setCargando] = useState(false);
@@ -83,9 +85,8 @@ export function Consulta({ usuario, id, names, lastNames }) {
         <div className='flex items-center'>
           <IconUser />
           <article className='pl-4'>
-            <h2 className='text-2xl font-semibold'>Bienvenido: <span>usuario aqui</span></h2>
-            <h3 className='text-xl'>CP11185647472</h3>
-            <h5>idaqui</h5>
+            <h2 className='text-2xl font-semibold'>Bienvenido: <span className='text-purple-700'>{info.names}</span> <span className='text-purple-700'>{info.lastNames}</span></h2>
+            <h3 className='text-xl'>{info.usuario} <span className='text-sm pl-4'>{info.id}</span></h3>
           </article>
         </div>
         <CloseSession />

@@ -9,7 +9,7 @@ export function Routes() {
 
   if (usuario) {
     return (
-      <Consulta />
+      <Consulta info={{ usuario, id, names, lastNames }} />
     )
   }
 
