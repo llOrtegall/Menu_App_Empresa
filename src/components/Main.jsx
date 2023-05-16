@@ -1,7 +1,9 @@
 function Main(){
     return(
         <main>
-            <p>Contenido De Busqueda</p>
+            <h5>
+                En este lado de mi aplicación colocare todo el css necesario
+            </h5>
         </main>
     )
 } 
