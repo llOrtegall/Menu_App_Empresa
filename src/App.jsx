@@ -1,13 +1,13 @@
-import { StrictMode } from "react";
-import { Home } from "./Home"
-
-function App() {
-
+export const App = () => {
   return (
-    <StrictMode>
-      <Home />
-    </StrictMode>
+    <nav className="w-full h-5 bg-blue-500">
+      <ul>
+        <li><a href="">Home</a></li>
+        <li><a href="">Home</a></li>
+        <li><a href="">Home</a></li>
+        <li><a href="">Home</a></li>
+      </ul>
+    </nav>
+
   )
 }
-
-export default App
