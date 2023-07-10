@@ -1,9 +1,12 @@
+import { StrictMode } from "react";
+import { Home } from "./Home"
+
 function App() {
 
   return (
-    <>
-      <p className="bg-blue-400">test</p>
-    </>
+    <StrictMode>
+      <Home />
+    </StrictMode>
   )
 }
 
