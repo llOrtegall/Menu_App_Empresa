@@ -1,56 +1,83 @@
-import { useState, useEffect } from 'react';
-
+import { useState } from 'react';
 
 export function App() {
-  const URL = 'https://ambientetest.datalaft.com:2095/api/ConsultaPrincipal'
-  const [resultado, setResultado] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    nombre: '',
+    identificacion: '',
+    cantidadPalabras: "2",
+    tienePrioridad_4: true
+  });
 
-  const SchemaConsulta =
-  {
-    "nombre": "Ivan Marino Ortega Garzon",
-    "identificacion": "1118307852",
-    "cantidadPalabras": "2",
-    "tienePrioridad_4": true
-  }
+  console.log(formData);
 
-  const hacerSolicitud = async () => {
-    try {
-      setLoading(true); // Activa el indicador de carga
-      const response = await fetch(URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYi5jb2xvcmFkbyAgICAgICAgICAiLCJuYmYiOjE2ODM1NTQxOTgsImV4cCI6MTcxNTExMTc5OCwiaWF0IjoxNjgzNTU0MTk4LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDM5OC8iLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo0NDM5OC8ifQ.pprQIYakLDQTH92668mhM4CQMBcEC6zLgNXeq00m-SU",
-        },
-        body: JSON.stringify(SchemaConsulta)
-      });
-      const data = await response.json();
-      setResultado(data);
-    } catch (error) {
-      console.error('Error al realizar la solicitud:', error);
-    } finally {
-      setLoading(false);
-    }
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  useEffect(() => {
-    hacerSolicitud();
-  }, []);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const apiUrl = 'https://ambientetest.datalaft.com:2095/api/ConsultaPrincipal';
+    const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYi5jb2xvcmFkbyAgICAgICAgICAiLCJuYmYiOjE2ODM1NTQxOTgsImV4cCI6MTcxNTExMTc5OCwiaWF0IjoxNjgzNTU0MTk4LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDM5OC8iLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo0NDM5OC8ifQ.pprQIYakLDQTH92668mhM4CQMBcEC6zLgNXeq00m-SU'
+
+
+    // Configura los datos de la solicitud POST
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${TOKEN}`
+      },
+      body: JSON.stringify(formData),
+    };
+
+    // Realiza la solicitud POST usando fetch
+    fetch(apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Respuesta del servidor:', data);
+        // Puedes manejar la respuesta del servidor aquí
+      })
+      .catch((error) => {
+        console.error('Error al hacer la solicitud POST:', error);
+        // Puedes manejar los errores aquí
+      });
+  };
 
   return (
-    <section className='p-2 m-2 bg-blue-500 text-white rounded-lg'>
-      {loading ? (
-        <p>Cargando...</p>
-      ) : resultado ? (
+    <div>
+      <h1>Formulario de Ejemplo</h1>
+      <form onSubmit={handleSubmit}>
         <div>
-          {console.log(resultado.nombre)}
-          <h3 className='pr-2'>Persona Consultada: {resultado.nombre}</h3>
-          <div>Resultado de la solicitud:</div>
+          <label htmlFor="nombre">Nombre:</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleChange}
+          />
         </div>
-      ) : (
-        <p>No se ha recibido ningún resultado.</p>
-      )}
-    </section>
+        <div>
+          <label htmlFor="text">Email:</label>
+          <input
+            type="text"
+            id="identificacion"
+            name="identificacion"
+            value={formData.identificacion}
+            onChange={handleChange}
+          />
+        </div>
+        {/* Otros campos del formulario */}
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
   );
 }
+
+export default App;
