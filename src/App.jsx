@@ -1,10 +1,55 @@
 import { useState } from 'react';
 import { ButtonLoading, IconUser, CloseSession } from './components/ButtonLoading.jsx'
 
-export function App() {
+function ComponenteVisible({ prop }) {
 
+  let arrayIgual = []
+
+  if (prop.listas.length > 0) {
+    arrayIgual = prop.listas.filter(i => i.documentoIdentidad === prop.numDocumento)
+    { console.log(arrayIgual) }
+    return (
+      <section className='bg-yellow-200 p-4 m-4 rounded-lg shadow-xl'>
+        {arrayIgual.length > 0
+          ? (arrayIgual.map(i => (
+            <section key={i.idLista} className='m-4 bg-green-200 flex flex-col shadow-lg'>
+              <div className='p-2'>
+                Documento: <span className='pr-4 font-semibold'>{i.documentoIdentidad}</span>
+                Tipo Documento: <span className='pr-4 font-semibold'>{i.tipoDocumento}</span>
+                Nombres: <span className='pr-4 font-semibold'>{i.nombreCompleto}</span>
+                Tipo De Persona: <span className='pr-4 font-semibold'>{i.tipoPersona}</span>
+              </div>
+              <div className='p-2'>
+                Fuente De Consulta: <span className='pr-4 font-semibold'>{i.fuenteConsulta}</span>
+                Nivel De Pioridad: <span className='pr-4 font-semibold'>{i.prioridad}</span>
+                Presunto Delito: <span className='pr-4 font-semibold'>{i.delito}</span>
+              </div>
+              <div className='p-2'>
+                Fecha De Actualización: <span className='pr-4 font-semibold'>{i.fechaActualizacion}</span>
+                Alias: <span className='pr-4 font-semibold'>{i.alias}</span>
+                Peps: <span className='pr-4 font-semibold'>{i.peps}</span>
+                zona: <span className='pr-4 font-semibold'>{i.zona}</span>
+              </div>
+              <div className='p-2'>
+                Otra Informacion: <span className='pr-4 font-semibold'>{i.justificacionCambio}</span>
+                Nombre Tipo De Lista: <span className='pr-4 font-semibold'>{i.nombreTipoLista}</span>
+              </div>
+            </section>
+          )))
+          : (<div>No Results</div>)
+        }
+      </section >
+    )
+  } else {
+    <div>No Resultados</div>
+  }
+
+}
+
+
+export function App() {
+  const [mostrarComponente, setMostrarComponente] = useState(false);
   const [data, setData] = useState(null);
-  const [activo, setActivo] = useState(false);
   const [cargando, setCargando] = useState(false);
   const [formData, setFormData] = useState({
     nombre: '',
@@ -13,8 +58,8 @@ export function App() {
     tienePrioridad_4: true
   });
 
-  const activarComponente = () => {
-    setActivo(true);
+  const toggleComponente = () => {
+    setMostrarComponente(!mostrarComponente);
   };
 
   const handleChange = (event) => {
@@ -58,34 +103,25 @@ export function App() {
     }
   }
 
-  const RenderResultadosCedula = (data) => {
-
+  const ValidarDocumentoConsulta = ({ prop }) => {
     let newArray = [];
-    if (data.listas.length > 0) {
-      newArray = data.listas.filter(i => i.documentoIdentidad === data.numDocumento)
+    if (prop.length > 0) {
+      newArray = prop.filter(i => i.documentoIdentidad === data.numDocumento)
+      return (
+        <div>{newArray.length}
+          <button className='p-2 rounded-lg ml-4 text-green-600 border bg-white hover:cursor-pointer hover:bg-green-400 hover:text-white'
+            onClick={toggleComponente}>Ver Detalles</button>
+        </ div>
+      )
+    } else {
+      return (<p>No Encontrado</p>)
     }
-    return (
-      newArray.length > 0
-        ? <p>{newArray.length}
-          <button className='bg-green-400 text-xs text-black p-1 rounded-lg font-semibold ml-4' onClick={activarComponente}>
-            Analizar Consultas
-          </button>
-        </p>
-        : <p>No tiene Antecedentes</p>
-    )
-  }
-
-  function RenderizarConsultas() {
-
-    return (
-      <div>REnder </div>
-    )
   }
 
   return (
     <>
       {/* // TODO: Modulo De Usuario Logueado  */}
-      <section className='flex h-full pl-6 justify-between bg-gray-400 m-2 p-4 rounded-xl'>
+      <section className='flex h-full pl-6 justify-between bg-gray-400 m-2 p-4 rounded-xl shadow-lg'>
         <div className='flex items-center'>
           <IconUser />
           <article className='pl-4'>
@@ -98,7 +134,7 @@ export function App() {
 
       {/* // TODO: Modulo De consultas  */}
       <main className='flex justify-around grid-flow-col'>
-        <section className='w-1/3 bg-green-700 p-16 m-2 rounded-xl shadow-lg'>
+        <section className='w-1/3 bg-green-500 p-16 m-4 rounded-xl shadow-xl'>
           <h1 className='text-2xl font-bold text-center text-white'>Consultar Antecedentes </h1>
           <form onSubmit={handleSubmit} className='flex flex-col py-2 mx-4'>
             <div className='flex flex-col py-2 mb-4'>
@@ -126,15 +162,15 @@ export function App() {
         </section>
 
         {/* // TODO: Modulo De Renderizado  De Consulta Información General*/}
-        <section className='w-2/3 bg-blue-300 p-4 rounded-xl shadow-lg  m-2 grid place-content-center'>
+        <section className='w-2/3 bg-blue-300 p-4 rounded-xl shadow-lg  m-4'>
           <h1 className=' bg-blue-500 w-full h-16 rounded-xl p-4 text-2xl font-semibold text-center border mb-4 shadow-lg'>Módulo De Consultas Información General</h1>
           <div className='w-full pb-4'>
             {cargando ? (
               <ButtonLoading />
             ) : data ? (
-              < div className='border p-4 rounded-xl bg-blue-500 shadow-lg'>
+              < div className='border p-4 rounded-xl bg-blue-500 shadow-lg '>
 
-                <section className='flex'>
+                <section className='flex justify-center items-center'>
                   <p className='pr-6 font-bold text-black'>Consultas Recibidas:
                     <span className='font-bold pl-4 text-white'>{data.cantCoincidencias}</span>
                   </p>
@@ -146,25 +182,36 @@ export function App() {
                   </p>
                 </section>
 
-                <section className='flex pt-2'>
+                <section className='flex pt-2 justify-center items-center'>
                   <p className='font-bold pr-6 text-black'>Nombre Consultado:
                     <span className='font-bold pl-4 text-white'> {data.nombre}</span>
                   </p>
-                  <p className='flex font-bold pr-6 text-black'>Resultados Con Cedula N°:
+                  <p className='flex font-bold pr-6 text-black items-center'>Resultados Con Cedula N°:
                     <span className='pr-2  font-bold pl-4 text-white'>{data.numDocumento}</span>
                     =
-                    <span className='pl-4 font-bold text-white'>{RenderResultadosCedula(data)}</span></p>
+                    <span className='pl-4 font-bold text-white '>
+                      {
+                        data.listas.length > 0
+                          ? <ValidarDocumentoConsulta prop={data.listas} />
+                          : (<p>No Encontrado</p>)
+                      }
+                    </span>
+                  </p>
+
                 </section>
               </div>
             ) : null}
           </div>
-
         </section>
       </main >
 
-      {activo && <RenderizarConsultas />}
-
+      {/* // TODO: Modulo De Rendirezado Especifico  */}
+      {data
+        ? mostrarComponente && <ComponenteVisible prop={data} />
+        : null
+      }
     </>
   );
 }
+
 export default App
