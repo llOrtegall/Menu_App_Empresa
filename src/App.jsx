@@ -1,7 +1,11 @@
 import { useState } from 'react';
+import { ButtonLoading, IconUser, CloseSession } from './components/ButtonLoading.jsx'
 
 export function App() {
-  const [responseData, setResponseData] = useState({})
+
+  const [data, setData] = useState(null);
+  const [activo, setActivo] = useState(false);
+  const [cargando, setCargando] = useState(false);
   const [formData, setFormData] = useState({
     nombre: '',
     identificacion: '',
@@ -9,11 +13,9 @@ export function App() {
     tienePrioridad_4: true
   });
 
-  console.log(responseData);
-
-
-  // "nombre": "WILMAN IVAN ORTEGA BETANCOURT",
-  // "numDocumento": "1087406670",
+  const activarComponente = () => {
+    setActivo(true);
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -23,7 +25,7 @@ export function App() {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const apiUrl = 'https://ambientetest.datalaft.com:2095/api/ConsultaPrincipal';
@@ -36,44 +38,70 @@ export function App() {
         'Authorization': `Bearer ${TOKEN}`
       },
       body: JSON.stringify(formData),
-    };
+    }
 
-    fetch(apiUrl, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        setResponseData(data);
-      })
-      .catch((error) => {
-        console.error('Error al hacer la solicitud POST:', error);
-      });
-  };
+    try {
+      setCargando(true)
+      const respuesta = await fetch(apiUrl, requestOptions);
+      if (respuesta.ok) {
+        // La solicitud se completó con éxito
+        const datos = await respuesta.json(); // Parsea la respuesta como JSON
+        setData(datos)
+      } else {
+        // La solicitud falló, maneja el error
+        console.error('Error en la solicitud:', respuesta.status, respuesta.statusText);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setCargando(false);
+    }
+  }
+
+  const RenderResultadosCedula = (data) => {
+
+    let newArray = [];
+    if (data.listas.length > 0) {
+      newArray = data.listas.filter(i => i.documentoIdentidad === data.numDocumento)
+    }
+    return (
+      newArray.length > 0
+        ? <p>{newArray.length}
+          <button className='bg-green-400 text-xs text-black p-1 rounded-lg font-semibold ml-4' onClick={activarComponente}>
+            Analizar Consultas
+          </button>
+        </p>
+        : <p>No tiene Antecedentes</p>
+    )
+  }
+
+  function RenderizarConsultas() {
+
+    return (
+      <div>REnder </div>
+    )
+  }
 
   return (
     <>
+      {/* // TODO: Modulo De Usuario Logueado  */}
       <section className='flex h-full pl-6 justify-between bg-gray-400 m-2 p-4 rounded-xl'>
         <div className='flex items-center'>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-14 h-14">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-          </svg>
+          <IconUser />
           <article className='pl-4'>
             <h2 className='text-2xl font-semibold'>Bienvenido Usuario De Prueba</h2>
             <h3 className='text-xl'>CP11185647472</h3>
           </article>
         </div>
-
-        <button className='flex flex-col items-center  rounded-lg'>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-          </svg>
-          <p className='font-semibold'>Cerrar Sesion</p>
-        </button>
+        <CloseSession />
       </section>
 
+      {/* // TODO: Modulo De consultas  */}
       <main className='flex justify-around grid-flow-col'>
         <section className='w-1/3 bg-green-700 p-16 m-2 rounded-xl shadow-lg'>
           <h1 className='text-2xl font-bold text-center text-white'>Consultar Antecedentes </h1>
-          <form onSubmit={handleSubmit} className='flex flex-col py-2'>
-            <div className='flex flex-col py-8 mb-4'>
+          <form onSubmit={handleSubmit} className='flex flex-col py-2 mx-4'>
+            <div className='flex flex-col py-2 mb-4'>
               <label className='py-3 font-medium text-white' htmlFor="nombre">Nombres:</label>
               <input
                 type="text"
@@ -83,7 +111,7 @@ export function App() {
                 value={formData.nombre}
                 onChange={handleChange}
               />
-              <label className='py-3 font-medium text-white' htmlFor="text">N° Documento:</label>
+              <label className='py-2 font-medium text-white' htmlFor="text">N° Documento:</label>
               <input
                 type="text"
                 id="identificacion"
@@ -97,20 +125,46 @@ export function App() {
           </form>
         </section>
 
-        <section className='w-2/3 bg-blue-300 p-10 m-2 rounded-xl shadow-lg'>
-          <div>
-            Aqui quiero colocar Algunos Datos De La Consulta
-          </div>
-        </section>
-      </main>
+        {/* // TODO: Modulo De Renderizado  De Consulta Información General*/}
+        <section className='w-2/3 bg-blue-300 p-4 rounded-xl shadow-lg  m-2 grid place-content-center'>
+          <h1 className=' bg-blue-500 w-full h-16 rounded-xl p-4 text-2xl font-semibold text-center border mb-4 shadow-lg'>Módulo De Consultas Información General</h1>
+          <div className='w-full pb-4'>
+            {cargando ? (
+              <ButtonLoading />
+            ) : data ? (
+              < div className='border p-4 rounded-xl bg-blue-500 shadow-lg'>
 
-      <section className='bg-green-300 m-2'>
-        <div>
-          Este Cuadrp Es De Ejemplo
-        </div>
-      </section>
+                <section className='flex'>
+                  <p className='pr-6 font-bold text-black'>Consultas Recibidas:
+                    <span className='font-bold pl-4 text-white'>{data.cantCoincidencias}</span>
+                  </p>
+                  <p className='font-bold pr-6 text-black'>N° De Consulta:
+                    <span className='font-bold pl-4 text-white'>{data.numConsulta}</span>
+                  </p>
+                  <p className='font-bold pr-6 text-black'>N° De Dcoumento Consultado:
+                    <span className='font-bold pl-4 text-white'>{data.numDocumento}</span>
+                  </p>
+                </section>
+
+                <section className='flex pt-2'>
+                  <p className='font-bold pr-6 text-black'>Nombre Consultado:
+                    <span className='font-bold pl-4 text-white'> {data.nombre}</span>
+                  </p>
+                  <p className='flex font-bold pr-6 text-black'>Resultados Con Cedula N°:
+                    <span className='pr-2  font-bold pl-4 text-white'>{data.numDocumento}</span>
+                    =
+                    <span className='pl-4 font-bold text-white'>{RenderResultadosCedula(data)}</span></p>
+                </section>
+              </div>
+            ) : null}
+          </div>
+
+        </section>
+      </main >
+
+      {activo && <RenderizarConsultas />}
+
     </>
   );
 }
-
-export default App;
+export default App
