@@ -10,9 +10,12 @@ function ComponenteVisible({ prop }) {
     { console.log(arrayIgual) }
     return (
       <section className='bg-yellow-200 p-4 m-4 rounded-lg shadow-xl'>
+        <h1 className=' bg-yellow-400 w-full h-16 rounded-xl p-4 text-2xl font-semibold text-center border shadow-lg'>
+          Módulo De Consulta Información Detallada
+        </h1>
         {arrayIgual.length > 0
           ? (arrayIgual.map(i => (
-            <section key={i.idLista} className='m-4 bg-green-200 flex flex-col shadow-lg'>
+            <section key={i.idLista} className='m-3 p-3 bg-green-200 flex flex-col shadow-lg rounded-2xl'>
               <div className='p-2'>
                 Documento: <span className='pr-4 font-semibold'>{i.documentoIdentidad}</span>
                 Tipo Documento: <span className='pr-4 font-semibold'>{i.tipoDocumento}</span>
@@ -43,9 +46,7 @@ function ComponenteVisible({ prop }) {
   } else {
     <div>No Resultados</div>
   }
-
 }
-
 
 export function App() {
   const [mostrarComponente, setMostrarComponente] = useState(false);
@@ -121,7 +122,7 @@ export function App() {
   return (
     <>
       {/* // TODO: Modulo De Usuario Logueado  */}
-      <section className='flex h-full pl-6 justify-between bg-gray-400 m-2 p-4 rounded-xl shadow-lg'>
+      <section className='flex h-full pl-6 justify-between bg-gray-400 m-4 p-4 rounded-xl shadow-lg'>
         <div className='flex items-center'>
           <IconUser />
           <article className='pl-4'>
@@ -135,7 +136,7 @@ export function App() {
       {/* // TODO: Modulo De consultas  */}
       <main className='flex justify-around grid-flow-col'>
         <section className='w-1/3 bg-green-500 p-16 m-4 rounded-xl shadow-xl'>
-          <h1 className='text-2xl font-bold text-center text-white'>Consultar Antecedentes </h1>
+          <h1 className='text-2xl font-bold text-center text-white'>Módulo Consultar Antecedentes</h1>
           <form onSubmit={handleSubmit} className='flex flex-col py-2 mx-4'>
             <div className='flex flex-col py-2 mb-4'>
               <label className='py-3 font-medium text-white' htmlFor="nombre">Nombres:</label>
