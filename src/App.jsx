@@ -157,7 +157,10 @@ export function App() {
                 onChange={handleChange}
               />
             </div>
-            <button className='mt-4 p-2 bg-yellow-500 rounded-lg shadow-lg font-semibold text-lg' type="submit">Consultar</button>
+            <button className='mt-4 p-2 bg-yellow-500 rounded-lg text-white shadow-lg font-semibold text-lg hover:bg-white hover:text-yellow-500'
+              type="submit">
+              Consultar
+            </button>
           </form>
         </section>
 
