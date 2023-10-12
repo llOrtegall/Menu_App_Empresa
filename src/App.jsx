@@ -92,40 +92,41 @@ export function App() {
       </section>
 
       {/* // TODO: Modulo De consultas  */}
-      <main className='flex justify-around grid-flow-col'>
-        <section className='w-1/3 bg-green-500 p-16 m-4 rounded-xl shadow-xl'>
+      <main className='flex justify-between'>
+        <section className='w-1/3 bg-green-500 p-12 m-4 rounded-xl shadow-xl'>
           <h1 className='text-2xl font-bold text-center text-white'>Módulo Consultar Antecedentes</h1>
-          <form onSubmit={handleSubmit} className='flex flex-col py-2 mx-4'>
-            <div className='flex flex-col py-2 mb-4'>
-              <label className='py-3 font-medium text-white' htmlFor="nombre">Nombres:</label>
+          <form onSubmit={handleSubmit} className='flex flex-col py-4'>
+
+            <div className='flex flex-row p-2 items-center justify-between'>
+              <label className='font-medium text-white mr-2' htmlFor="nombre">Nombres:</label>
               <input
-                type="text"
-                id="nombre"
-                name="nombre"
-                className='rounded-lg p-2'
-                value={formData.nombre}
-                onChange={handleChange}
+                type="text" id="nombre"
+                name="nombre" className='rounded-lg p-2 w-full'
+                value={formData.nombre} onChange={handleChange}
               />
-              <label className='py-2 font-medium text-white' htmlFor="identificacion">N° Documento:</label>
+            </div>
+
+            <div className='flex flex-row p-2 items-center justify-between'>
+              <label className='font-normal text-white' htmlFor="identificacion">N° Documento</label>
               <input
-                type="text"
-                id="identificacion"
-                name="identificacion"
-                className='rounded-lg p-2'
-                value={formData.identificacion}
-                onChange={handleChange}
+                type="text" id="identificacion"
+                name="identificacion" className='rounded-lg p-2'
+                value={formData.identificacion} onChange={handleChange}
               />
-              <label className='py-2 font-medium text-white' htmlFor="cantidadPalabras">Cantidad De Palabras:</label>
-              <select defaultValue='1' name="cantidadPalabras" id="cantidadPalabras" onChange={handleChange} >
+              <label className='font-normal text-white' htmlFor="cantidadPalabras">N° Palabras</label>
+              <select className='p-2 rounded-lg ' defaultValue='1'
+                name="cantidadPalabras" id="cantidadPalabras" onChange={handleChange} >
                 <option value='1'>1</option>
                 <option value='2'>2</option>
                 <option value='3'>3</option>
               </select>
             </div>
-            <button className='mt-4 p-2 bg-yellow-500 rounded-lg text-white shadow-lg font-semibold text-lg hover:bg-white hover:text-yellow-500'
+
+            <button className='w-full p-2 mt-4 bg-yellow-500 rounded-lg text-white shadow-lg font-semibold text-lg hover:bg-white hover:text-yellow-500'
               type="submit">
               Consultar
             </button>
+
           </form>
         </section>
 
