@@ -13,9 +13,6 @@ export function App() {
     tienePrioridad_4: true
   });
 
-  console.log(formData)
-
-
   const toggleComponente = () => {
     setMostrarComponente(!mostrarComponente);
   };
@@ -90,7 +87,7 @@ export function App() {
         <CloseSession />
       </section>
 
-      {/* // TODO: Modulo De consultas  */}
+      {/* // TODO: Modulo De consultar Antecedentes  */}
       <main className='flex justify-between'>
         <section className='w-1/3 bg-green-500 p-12 m-4 rounded-xl shadow-xl'>
           <h1 className='text-2xl font-bold text-center text-white'>Módulo Consultar Antecedentes</h1>
