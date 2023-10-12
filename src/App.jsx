@@ -9,9 +9,12 @@ export function App() {
   const [formData, setFormData] = useState({
     nombre: '',
     identificacion: '',
-    cantidadPalabras: "2",
+    cantidadPalabras: '',
     tienePrioridad_4: true
   });
+
+  console.log(formData)
+
 
   const toggleComponente = () => {
     setMostrarComponente(!mostrarComponente);
@@ -31,6 +34,7 @@ export function App() {
       return (<p>No Encontrado</p>)
     }
   }
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -101,7 +105,7 @@ export function App() {
                 value={formData.nombre}
                 onChange={handleChange}
               />
-              <label className='py-2 font-medium text-white' htmlFor="text">N° Documento:</label>
+              <label className='py-2 font-medium text-white' htmlFor="identificacion">N° Documento:</label>
               <input
                 type="text"
                 id="identificacion"
@@ -110,6 +114,12 @@ export function App() {
                 value={formData.identificacion}
                 onChange={handleChange}
               />
+              <label className='py-2 font-medium text-white' htmlFor="cantidadPalabras">Cantidad De Palabras:</label>
+              <select name="cantidadPalabras" id="cantidadPalabras" onChange={handleChange} defaultValue='1'>
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+              </select>
             </div>
             <button className='mt-4 p-2 bg-yellow-500 rounded-lg text-white shadow-lg font-semibold text-lg hover:bg-white hover:text-yellow-500'
               type="submit">

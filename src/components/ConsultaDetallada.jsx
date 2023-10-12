@@ -6,7 +6,6 @@ export function ConsultaDetallada({ prop }) {
 
   if (listas.length > 0) {
     arrayIgual = listas.filter(i => i.documentoIdentidad === numDocumento)
-    { console.log(arrayIgual) }
     return (
       <section className='bg-yellow-200 p-4 m-4 rounded-lg shadow-xl'>
         <h1 className=' bg-yellow-400 w-full h-16 rounded-xl p-4 text-2xl font-semibold text-center border shadow-lg'>
