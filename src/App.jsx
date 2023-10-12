@@ -25,7 +25,8 @@ export function App() {
     if (prop.length > 0) {
       newArray = prop.filter(i => i.documentoIdentidad === data.numDocumento)
       return (
-        <div>{newArray.length}
+        <div>
+          <span className='bg-yellow-300 text-red-700 p-2 px-4 rounded-md'>{newArray.length}</span>
           <button className='p-2 rounded-lg ml-4 text-green-600 border bg-white hover:cursor-pointer hover:bg-green-400 hover:text-white'
             onClick={toggleComponente}>Ver Detalles</button>
         </ div>
@@ -115,7 +116,7 @@ export function App() {
                 onChange={handleChange}
               />
               <label className='py-2 font-medium text-white' htmlFor="cantidadPalabras">Cantidad De Palabras:</label>
-              <select name="cantidadPalabras" id="cantidadPalabras" onChange={handleChange} defaultValue='1'>
+              <select defaultValue='1' name="cantidadPalabras" id="cantidadPalabras" onChange={handleChange} >
                 <option value='1'>1</option>
                 <option value='2'>2</option>
                 <option value='3'>3</option>
@@ -138,22 +139,22 @@ export function App() {
               < div className='border p-4 rounded-xl bg-blue-500 shadow-lg '>
 
                 <section className='flex justify-center items-center'>
-                  <p className='pr-6 font-bold text-black'>Consultas Recibidas:
+                  <div className='pr-6 font-bold text-black'>Consultas Recibidas:
                     <span className='font-bold pl-4 text-white'>{data.cantCoincidencias}</span>
-                  </p>
-                  <p className='font-bold pr-6 text-black'>N° De Consulta:
+                  </div>
+                  <div className='font-bold pr-6 text-black'>N° De Consulta:
                     <span className='font-bold pl-4 text-white'>{data.numConsulta}</span>
-                  </p>
-                  <p className='font-bold pr-6 text-black'>N° De Dcoumento Consultado:
+                  </div>
+                  <div className='font-bold pr-6 text-black'>N° De Dcoumento Consultado:
                     <span className='font-bold pl-4 text-white'>{data.numDocumento}</span>
-                  </p>
+                  </div>
                 </section>
 
                 <section className='flex pt-2 justify-center items-center'>
-                  <p className='font-bold pr-6 text-black'>Nombre Consultado:
+                  <div className='font-bold pr-6 text-black'>Nombre Consultado:
                     <span className='font-bold pl-4 text-white'> {data.nombre}</span>
-                  </p>
-                  <p className='flex font-bold pr-6 text-black items-center'>Resultados Con Cedula N°:
+                  </div>
+                  <div className='flex font-bold pr-6 text-black items-center'>Resultados Que Contienen :
                     <span className='pr-2  font-bold pl-4 text-white'>{data.numDocumento}</span>
                     =
                     <span className='pl-4 font-bold text-white '>
@@ -163,7 +164,7 @@ export function App() {
                           : (<p>No Encontrado</p>)
                       }
                     </span>
-                  </p>
+                  </div>
 
                 </section>
               </div>
