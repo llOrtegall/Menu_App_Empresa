@@ -36,7 +36,6 @@ export function App() {
     }
   }
 
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -162,7 +161,7 @@ export function App() {
                       {
                         data.listas.length > 0
                           ? <ValidarDocumentoConsulta prop={data.listas} />
-                          : (<p>No Encontrado</p>)
+                          : (<p className='text-red-700'>Ninguno !</p>)
                       }
                     </span>
                   </div>

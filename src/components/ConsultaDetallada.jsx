@@ -37,12 +37,18 @@ export function ConsultaDetallada({ prop }) {
               </div>
             </section>
           )))
-          : (<div>No Results</div>)
+          : (
+            <div className="pt-2 text-center">De las
+              <span className="font-bold px-2">{listas.length}</span>
+              Consultas Recibidas, Ninguna Contiene Información Con El Número De Cedula:
+              <span className="font-bold pl-2">{numDocumento}</span>
+            </div>
+          )
         }
       </section >
     )
   } else {
-    <div>No Resultados</div>
+    <div>De las {listas.length}</div>
   }
 }
 
