@@ -1,57 +1,11 @@
 import { useState } from 'react';
-import { ButtonLoading, IconUser, CloseSession } from './components/ButtonLoading.jsx'
-
-function ComponenteVisible({ prop }) {
-
-  let arrayIgual = []
-
-  if (prop.listas.length > 0) {
-    arrayIgual = prop.listas.filter(i => i.documentoIdentidad === prop.numDocumento)
-    { console.log(arrayIgual) }
-    return (
-      <section className='bg-yellow-200 p-4 m-4 rounded-lg shadow-xl'>
-        <h1 className=' bg-yellow-400 w-full h-16 rounded-xl p-4 text-2xl font-semibold text-center border shadow-lg'>
-          Módulo De Consulta Información Detallada
-        </h1>
-        {arrayIgual.length > 0
-          ? (arrayIgual.map(i => (
-            <section key={i.idLista} className='m-3 p-3 bg-green-200 flex flex-col shadow-lg rounded-2xl'>
-              <div className='p-2'>
-                Documento: <span className='pr-4 font-semibold'>{i.documentoIdentidad}</span>
-                Tipo Documento: <span className='pr-4 font-semibold'>{i.tipoDocumento}</span>
-                Nombres: <span className='pr-4 font-semibold'>{i.nombreCompleto}</span>
-                Tipo De Persona: <span className='pr-4 font-semibold'>{i.tipoPersona}</span>
-              </div>
-              <div className='p-2'>
-                Fuente De Consulta: <span className='pr-4 font-semibold'>{i.fuenteConsulta}</span>
-                Nivel De Pioridad: <span className='pr-4 font-semibold'>{i.prioridad}</span>
-                Presunto Delito: <span className='pr-4 font-semibold'>{i.delito}</span>
-              </div>
-              <div className='p-2'>
-                Fecha De Actualización: <span className='pr-4 font-semibold'>{i.fechaActualizacion}</span>
-                Alias: <span className='pr-4 font-semibold'>{i.alias}</span>
-                Peps: <span className='pr-4 font-semibold'>{i.peps}</span>
-                zona: <span className='pr-4 font-semibold'>{i.zona}</span>
-              </div>
-              <div className='p-2'>
-                Otra Informacion: <span className='pr-4 font-semibold'>{i.justificacionCambio}</span>
-                Nombre Tipo De Lista: <span className='pr-4 font-semibold'>{i.nombreTipoLista}</span>
-              </div>
-            </section>
-          )))
-          : (<div>No Results</div>)
-        }
-      </section >
-    )
-  } else {
-    <div>No Resultados</div>
-  }
-}
+import { ConsultaDetallada } from './components/ConsultaDetallada.jsx';
+import { ButtonLoading, IconUser, CloseSession } from './components/ButtonLoading.jsx';
 
 export function App() {
-  const [mostrarComponente, setMostrarComponente] = useState(false);
   const [data, setData] = useState(null);
   const [cargando, setCargando] = useState(false);
+  const [mostrarComponente, setMostrarComponente] = useState(false);
   const [formData, setFormData] = useState({
     nombre: '',
     identificacion: '',
@@ -62,6 +16,21 @@ export function App() {
   const toggleComponente = () => {
     setMostrarComponente(!mostrarComponente);
   };
+
+  const ValidarDocumentoConsulta = ({ prop }) => {
+    let newArray = [];
+    if (prop.length > 0) {
+      newArray = prop.filter(i => i.documentoIdentidad === data.numDocumento)
+      return (
+        <div>{newArray.length}
+          <button className='p-2 rounded-lg ml-4 text-green-600 border bg-white hover:cursor-pointer hover:bg-green-400 hover:text-white'
+            onClick={toggleComponente}>Ver Detalles</button>
+        </ div>
+      )
+    } else {
+      return (<p>No Encontrado</p>)
+    }
+  }
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -90,11 +59,9 @@ export function App() {
       setCargando(true)
       const respuesta = await fetch(apiUrl, requestOptions);
       if (respuesta.ok) {
-        // La solicitud se completó con éxito
-        const datos = await respuesta.json(); // Parsea la respuesta como JSON
+        const datos = await respuesta.json();
         setData(datos)
       } else {
-        // La solicitud falló, maneja el error
         console.error('Error en la solicitud:', respuesta.status, respuesta.statusText);
       }
     } catch (error) {
@@ -104,20 +71,6 @@ export function App() {
     }
   }
 
-  const ValidarDocumentoConsulta = ({ prop }) => {
-    let newArray = [];
-    if (prop.length > 0) {
-      newArray = prop.filter(i => i.documentoIdentidad === data.numDocumento)
-      return (
-        <div>{newArray.length}
-          <button className='p-2 rounded-lg ml-4 text-green-600 border bg-white hover:cursor-pointer hover:bg-green-400 hover:text-white'
-            onClick={toggleComponente}>Ver Detalles</button>
-        </ div>
-      )
-    } else {
-      return (<p>No Encontrado</p>)
-    }
-  }
 
   return (
     <>
@@ -211,7 +164,7 @@ export function App() {
 
       {/* // TODO: Modulo De Rendirezado Especifico  */}
       {data
-        ? mostrarComponente && <ComponenteVisible prop={data} />
+        ? mostrarComponente && <ConsultaDetallada prop={data} />
         : null
       }
     </>
