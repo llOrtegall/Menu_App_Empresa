@@ -7,7 +7,7 @@ export function RegisterAndLoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  //TODO 
+  //TODO: Cambia el estado de login 
   const [isLoginOrRegister, setIsLoginOrRegister] = useState('register')
 
   const { setUsername: setLoggedInUsername, setId } = useContext(UserContext);
