@@ -1,0 +1,41 @@
+---
+import CompanyIcon from "./Icons/CompanyIcon.astro";
+import InventoryIcon from "./Icons/InventoryIcon.astro";
+import ServerIcon from "./Icons/ServerIcon.astro";
+import ArrowIcon from "./Icons/Button.astro";
+---
+
+<section class="flex gap-4">
+  <section class="flex flex-col justify-around items-center w-80 h-[520px] bg-gray-800 border-gray-200 rounded-xl shadow-lg border">
+    <h5 class="text-2xl text-center font-bold text-orange-400 py-4">
+      Bodega - Stock Company
+    </h5>
+
+    <figure class="flex w-full justify-center gap-4"><CompanyIcon /><InventoryIcon /><ServerIcon /></figure>
+
+    <article class="py-5 pl-4 flex flex-col items-center">
+      <p class="py-2 font-normal text-white text-pretty">
+        Aplicación para el control de stock de Activos Fijos y Insumos de la empresa.
+      </p>
+      <p class="py-2 font-normal text-white text-pretty">
+        Conectada a la base de datos de la empresa, permite la gestión de inventario y la generación de reportes.
+      </p>
+    </article>
+
+    <section class="flex py-4">
+      <figure>
+        <img src="/multired.png" width="130" alt="MULTIRED">
+      </figure>
+      <figure>
+        <img src="/servired.png" width="130" alt="SERVIRED">
+      </figure>
+    </section>
+
+    <a href="/chat_bot/index.html" class="flex items-center bg-green-600 py-2 px-8 rounded-md hover:bg-green-700">
+      <p class="font-semibold up">Ingresar App</p>
+      <figure class="pt-1">
+        <ArrowIcon />
+      </figure>
+    </a>
+  </section>
+</section>
