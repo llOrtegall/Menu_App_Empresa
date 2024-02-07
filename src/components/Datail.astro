@@ -1,0 +1,43 @@
+---
+import ArrowIcon from './Icons/Button.astro'
+import TelIcon from './Icons/CelIcon.astro'
+import DataIcon from './Icons/DataIcon.astro'
+import DocIcon from './Icons/DocIcon.astro'
+
+interface Props {
+  id: string
+  title: string
+  description: string
+  description2: string
+  link: string
+}
+
+const { id, title, description, description2, link } = Astro.props;
+
+---
+
+<section id={id} class="flex flex-col justify-around items-center w-80 h-[500px] bg-gray-800 border-gray-200 rounded-xl shadow-lg border">
+  <h5 class="text-2xl text-center font-bold text-orange-400 py-4">{title}</h5>
+
+<figure class="flex w-full justify-center gap-4 ">
+  <TelIcon /> <DocIcon /> <DataIcon />
+</figure>
+
+<article class="py-5 px-4 flex flex-col items-center">
+
+  <p class="py-2 font-normal text-white text-pretty">
+    {description}
+  </p>
+  <p class="py-2 font-normal text-white text-pretty">
+    {description2}
+  </p>
+
+</article>
+
+<a href={link} class="flex items-center bg-green-600 py-3 px-8 rounded-md hover:bg-green-700">
+  <p class="font-semibold up">Ingresar App</p>
+  <figure class="pt-1">
+    <ArrowIcon />
+  </figure>
+</a>
+</section>

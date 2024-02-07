@@ -1,0 +1,27 @@
+---
+import DetalleProyecto from './Datail.astro';
+
+const PROYECTOS = [
+  {
+    id: 1,
+    title: 'Chat_Boot Validator',
+    description: 'Aplicación para validar registros del chatboot, verificando la información de los usuarios.',
+    description2: 'Posterior se agregarán a base de datos empresarial (Bnet) y habilitándolos para acumular puntos.',
+    link: '/chat_bot/index.html',
+  },
+  {
+    id:2,
+    title: 'Bodega Stock Soporte',
+    description: 'Aplicación para soporte de bodega, con el fin de llevar un control de stock de productos.',
+    description2: 'Además de llevar un control de los productos que se encuentran en bodega.',
+    link: '/bodega_stock/index.html',
+  }
+]
+---
+<section class='flex gap-4'>
+  {
+    PROYECTOS.map((p) => (
+      <DetalleProyecto  description={p.description} description2={p.description2} id='' link={p.link} title={p.title}/>
+    ))
+  }
+</section>
